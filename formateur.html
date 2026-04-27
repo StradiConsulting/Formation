@@ -241,25 +241,33 @@ document.getElementById("btn-feu").onclick = function() {
       clearInterval(iv);
       cnum.style.display = "none";
       attn.style.display = "none";
-      startFW();
+      // Verifier les resultats AVANT de lancer le feu
       db.ref("resultats").once("value").then(function(snap){
         var data = snap.val();
         var list = data ? Object.values(data).filter(function(r){return r&&r.statut==="termine";}) : [];
         var allOk = list.length>0 && list.every(function(r){return (r.pct||0)>=50;});
-        // Bravo apparait apres 3 secondes de feu d artifice
+        var msg = allOk
+          ? "🎉 BRAVO !!!! 🎉<br>Vous avez tous validé la formation !<br>Félicitations à toute la promotion !"
+          : "👏 Merci à tous pour votre participation !<br>Continuez à progresser !";
+
+        // Lancer le feu d artifice
+        startFW();
+
+        // Message apres 3 secondes
         setTimeout(function(){
-          bravo.innerHTML = allOk
-            ? "🎉 BRAVO !!!! 🎉<br>Vous avez tous validé la formation !<br>Félicitations à toute la promotion !"
-            : "👏 Merci à tous pour votre participation !<br>Continuez à progresser !";
+          bravo.innerHTML = msg;
           bravo.style.display = "block";
         }, 3000);
+
+        // Arret du feu et fermeture apres 8 secondes
         setTimeout(function(){
           stopFW();
+          bravo.style.display = "none";
           overlay.classList.remove("on");
           cnum.style.display = "block";
           attn.style.display = "block";
           cnum.textContent = "10";
-        }, 12000);
+        }, 8000);
       });
     }
   }, 1000);
