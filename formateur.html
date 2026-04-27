@@ -246,17 +246,20 @@ document.getElementById("btn-feu").onclick = function() {
         var data = snap.val();
         var list = data ? Object.values(data).filter(function(r){return r&&r.statut==="termine";}) : [];
         var allOk = list.length>0 && list.every(function(r){return (r.pct||0)>=50;});
-        bravo.innerHTML = allOk
-          ? "BRAVO !<br>Tous les stagiaires ont validé la formation !<br>Félicitations à toute la promotion !"
-          : "Merci à tous pour votre participation !<br>Continuez à progresser !";
-        bravo.style.display = "block";
+        // Bravo apparait apres 3 secondes de feu d artifice
+        setTimeout(function(){
+          bravo.innerHTML = allOk
+            ? "🎉 BRAVO !!!! 🎉<br>Vous avez tous validé la formation !<br>Félicitations à toute la promotion !"
+            : "👏 Merci à tous pour votre participation !<br>Continuez à progresser !";
+          bravo.style.display = "block";
+        }, 3000);
         setTimeout(function(){
           stopFW();
           overlay.classList.remove("on");
           cnum.style.display = "block";
           attn.style.display = "block";
           cnum.textContent = "10";
-        }, 10000);
+        }, 12000);
       });
     }
   }, 1000);
