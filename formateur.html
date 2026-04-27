@@ -61,7 +61,7 @@ canvas{position:fixed;top:0;left:0;pointer-events:none;z-index:10001}
 <body>
 <canvas id="fc"></canvas>
 <div class="overlay" id="overlay">
-  <div class="attn" id="attn">ATTENTION — PARUTION DES RÉSULTATS</div>
+  <div class="attn" id="attn">ATTENTION — PARUTION DES RESULTATS</div>
   <div class="cdown" id="cnum">10</div>
   <div class="bravo" id="bravo"></div>
 </div>
@@ -74,13 +74,13 @@ canvas{position:fixed;top:0;left:0;pointer-events:none;z-index:10001}
 <div class="stats">
   <div class="stat-card"><div class="stat-num" id="s-total">0</div><div class="stat-label">Stagiaires</div></div>
   <div class="stat-card"><div class="stat-num" id="s-encours">0</div><div class="stat-label">En cours</div></div>
-  <div class="stat-card"><div class="stat-num" id="s-termines">0</div><div class="stat-label">Terminés</div></div>
+  <div class="stat-card"><div class="stat-num" id="s-termines">0</div><div class="stat-label">Termines</div></div>
   <div class="stat-card"><div class="stat-num" id="s-moy">-</div><div class="stat-label">Moyenne</div></div>
 </div>
 <div class="controls">
-  <button class="btn btn-danger" id="btn-raz">Remettre à zéro</button>
-  <button class="btn btn-warning" id="btn-mask">Masquer les résultats</button>
-  <button class="btn btn-resultats" id="btn-feu">Contrôle des résultats</button>
+  <button class="btn btn-danger" id="btn-raz">Remettre a zero</button>
+  <button class="btn btn-warning" id="btn-mask">Masquer les resultats</button>
+  <button class="btn btn-resultats" id="btn-feu">Controle des resultats</button>
   <button class="btn btn-print" id="btn-print">Imprimer</button>
 </div>
 <div id="second-banner"></div>
@@ -91,7 +91,7 @@ canvas{position:fixed;top:0;left:0;pointer-events:none;z-index:10001}
 var firebaseConfig = { databaseURL: "https://stradi-quiz-default-rtdb.europe-west1.firebasedatabase.app" };
 firebase.initializeApp(firebaseConfig);
 var db = firebase.database();
-var masked = false;
+var masked = true;
 var allKeys = {};
 
 // stocke les cles Firebase par index
@@ -137,27 +137,31 @@ function renderTable(list) {
     var echec = !ec && (r.pct||0) < 50;
     var badge = ec
       ? "<span class='badge badge-ec'>Q"+(r.question_en_cours||1)+"/40</span>"
-      : (r.pct||0)>=80 ? "<span class='badge badge-tb'>Très bien</span>"
+      : (r.pct||0)>=80 ? "<span class='badge badge-tb'>Tres bien</span>"
       : (r.pct||0)>=60 ? "<span class='badge badge-b'>Bien</span>"
       : (r.pct||0)>=50 ? "<span class='badge badge-p'>Passable</span>"
       : "<span class='badge badge-i'>Insuffisant</span>";
-    // boutons sans apostrophes dans onclick - on utilise data-idx
     var actions = "<button class='btn-del' data-idx='"+i+"' title='Supprimer'>&#x1F5D1;</button>";
     if (echec) {
-      actions += "<button class='btn-second' data-idx='"+i+"'>2ème chance</button>";
+      actions += "<button class='btn-second' data-idx='"+i+"'>2eme chance</button>";
     }
+    // Colonnes score et % masquees si resultats masques
+    var scoreCell = masked ? "<td>-</td><td>-</td>" : "<td>"+(ec?"-":(r.score||0)+"/40")+"</td><td>"+(ec?"-":(r.pct||0)+"%")+"</td>";
     rows += "<tr>"
       +"<td>"+(i+1)+"</td>"
       +"<td><strong>"+(r.nom||"-")+"</strong></td>"
-      +"<td>"+(ec?"-":(r.score||0)+"/40")+"</td>"
-      +"<td>"+(ec?"-":(r.pct||0)+"%")+"</td>"
+      +scoreCell
       +"<td>"+badge+"</td>"
       +"<td>"+(r.heure||"-")+"</td>"
       +"<td>"+actions+"</td>"
       +"</tr>";
   }
+  // En-tete selon etat masquer
+  var thead = masked
+    ? "<thead><tr><th>#</th><th>Nom</th><th></th><th></th><th>Statut</th><th>Heure</th><th></th></tr></thead>"
+    : "<thead><tr><th>#</th><th>Nom</th><th>Score</th><th>%</th><th>Statut</th><th>Heure</th><th></th></tr></thead>";
   document.getElementById("tbl").innerHTML =
-    "<table><thead><tr><th>#</th><th>Nom</th><th>Score</th><th>%</th><th>Statut</th><th>Heure</th><th></th></tr></thead><tbody>"+rows+"</tbody></table>";
+    "<table>"+thead+"<tbody>"+rows+"</tbody></table>";
 
   // attacher les evenements apres rendu
   var delBtns = document.querySelectorAll(".btn-del");
@@ -165,7 +169,7 @@ function renderTable(list) {
     delBtns[d].addEventListener("click", function(){
       var idx = parseInt(this.getAttribute("data-idx"));
       var key = getKey(idx);
-      if (key && confirm("Supprimer cette entrée ?")) {
+      if (key && confirm("Supprimer cette entree ?")) {
         db.ref("resultats/" + key).remove();
       }
     });
@@ -175,7 +179,7 @@ function renderTable(list) {
     secBtns[s].addEventListener("click", function(){
       var idx = parseInt(this.getAttribute("data-idx"));
       var key = getKey(idx);
-      if (key && confirm("Autoriser ce stagiaire à refaire le quiz ?")) {
+      if (key && confirm("Autoriser ce stagiaire a refaire le quiz ?")) {
         db.ref("resultats/" + key).remove();
       }
     });
@@ -187,7 +191,7 @@ function renderBanner(list) {
   var banner = document.getElementById("second-banner");
   if (echecs.length === 0) { banner.innerHTML = ""; return; }
   var noms = echecs.map(function(r){return r.nom;}).join(", ");
-  banner.innerHTML = "<div class='second-banner'>&#9888; <strong>"+echecs.length+" stagiaire(s) sous la moyenne :</strong> "+noms+" — Utilisez le bouton <strong>2ème chance</strong> pour leur permettre de refaire le quiz.</div>";
+  banner.innerHTML = "<div class='second-banner'>&#9888; <strong>"+echecs.length+" stagiaire(s) sous la moyenne :</strong> "+noms+" — Utilisez le bouton <strong>2eme chance</strong> pour leur permettre de refaire le quiz.</div>";
 }
 
 function updateStats(list) {
@@ -201,7 +205,7 @@ function updateStats(list) {
 }
 
 document.getElementById("btn-raz").onclick = function() {
-  if (!confirm("Remettre à zéro tous les resultats ?")) return;
+  if (!confirm("Remettre a zero tous les resultats ?")) return;
   db.ref("resultats").remove();
   db.ref("config/hidden").set(false);
 };
@@ -209,11 +213,32 @@ document.getElementById("btn-raz").onclick = function() {
 document.getElementById("btn-mask").onclick = function() {
   masked = !masked;
   db.ref("config/hidden").set(masked);
+  // Re-rendre le tableau pour mettre a jour les colonnes
+  db.ref("resultats").once("value").then(function(snap){
+    var data = snap.val();
+    if (!data) return;
+    var list = [];
+    var keys = Object.keys(data);
+    for (var i=0; i<keys.length; i++) {
+      var r = data[keys[i]];
+      if (r && r.nom) { r._key = keys[i]; list.push(r); }
+    }
+    list.sort(function(a,b){
+      if (a.statut==="termine" && b.statut!=="termine") return -1;
+      if (a.statut!=="termine" && b.statut==="termine") return 1;
+      return (a.nom||"").localeCompare(b.nom||"");
+    });
+    for (var j=0; j<list.length; j++) { allKeys[j] = list[j]._key; }
+    renderTable(list);
+  });
 };
 
+db.ref("config/hidden").once("value", function(snap){
+  if (snap.val() === null) { db.ref("config/hidden").set(true); }
+});
 db.ref("config/hidden").on("value", function(snap){
   masked = snap.val() === true;
-  document.getElementById("btn-mask").textContent = masked ? "Afficher les résultats" : "Masquer les résultats";
+  document.getElementById("btn-mask").textContent = masked ? "Afficher les resultats" : "Masquer les resultats";
   document.getElementById("btn-mask").className = masked ? "btn btn-success" : "btn btn-warning";
 });
 
@@ -228,8 +253,9 @@ document.getElementById("btn-feu").onclick = function() {
   attn.style.display = "block";
   bravo.style.display = "none";
   cnum.style.display = "block";
-  cnum.textContent = "10";
-  var n = 10;
+  cnum.textContent = "5";
+  stopFW();
+  var n = 5;
   var iv = setInterval(function() {
     n--;
     cnum.classList.remove("pop");
@@ -241,41 +267,30 @@ document.getElementById("btn-feu").onclick = function() {
       clearInterval(iv);
       cnum.style.display = "none";
       attn.style.display = "none";
-      // Verifier les resultats AVANT de lancer le feu
       db.ref("resultats").once("value").then(function(snap){
         var data = snap.val();
         var list = data ? Object.values(data).filter(function(r){return r&&r.statut==="termine";}) : [];
         var allOk = list.length>0 && list.every(function(r){return (r.pct||0)>=50;});
-        var msg = allOk
-          ? "🎉 BRAVO !!!! 🎉<br>Vous avez tous validé la formation !<br>Félicitations à toute la promotion !"
-          : "👏 Merci à tous pour votre participation !<br>Continuez à progresser !";
-
-        // Lancer le feu d artifice
-        startFW();
-
-        // Message apres 3 secondes
-        setTimeout(function(){
-          bravo.innerHTML = msg;
-          bravo.style.display = "block";
-        }, 3000);
-
-        // Arret du feu et fermeture apres 8 secondes
+        bravo.innerHTML = allOk
+          ? "BRAVO !!! <br>Tous les participants ont reussi le test !!!<br>Felicitations a toute la promotion !"
+          : "Merci a tous pour votre participation !<br>Continuez a progresser !";
+        bravo.style.display = "block";
+        setTimeout(function(){ startFW(); }, 3200);
         setTimeout(function(){
           stopFW();
-          bravo.style.display = "none";
           overlay.classList.remove("on");
+          bravo.style.display = "none";
           cnum.style.display = "block";
           attn.style.display = "block";
-          cnum.textContent = "10";
-        }, 8000);
+          cnum.textContent = "5";
+        }, 7500);
       });
     }
   }, 1000);
   overlay.onclick = function(e){
-    if (e.target===overlay){ clearInterval(iv); stopFW(); overlay.classList.remove("on"); cnum.textContent="10"; }
+    if (e.target===overlay){ clearInterval(iv); stopFW(); overlay.classList.remove("on"); cnum.textContent="5"; }
   };
 };
-
 // FIREWORKS
 var canvas=document.getElementById("fc"), ctx=canvas.getContext("2d"), parts=[], fwr=false;
 function rsz(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
