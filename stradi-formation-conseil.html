@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formation Conseil Senior — Stradi Formation</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #F7F8FA;
+    color: #1a1a2e;
+    min-height: 100vh;
+  }
+
+  :root {
+    --stradi-blue: #1B4F72;
+    --stradi-blue-light: #2E86AB;
+    --stradi-green: #6B9E6E;
+    --stradi-slate: #5B7FA6;
+    --stradi-coral: #D9534F;
+    --bg: #F7F8FA;
+    --bg2: #FFFFFF;
+    --bg3: #EEF2F7;
+    --border: rgba(27,79,114,0.15);
+    --text: #1a1a2e;
+    --text2: #4a5568;
+    --text3: #718096;
+  }
+
+  /* NAV */
+  .topnav {
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .nav-logo { display: flex; align-items: center; padding: 10px 20px 10px 0; border-right: 1px solid var(--border); margin-right: 12px; }
+  .nav-logo img { height: 40px; width: auto; }
+  .nav-btn {
+    padding: 14px 18px;
+    font-size: 14px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text2);
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    transition: all 0.15s;
+    font-weight: 400;
+  }
+  .nav-btn.active { color: var(--stradi-blue); border-bottom-color: var(--stradi-blue); font-weight: 500; }
+  .nav-btn:hover { color: var(--stradi-blue); background: var(--bg3); }
+
+  /* LAYOUT */
+  .container { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* HERO */
+  .hero {
+    background: var(--stradi-blue);
+    border-radius: 12px;
+    padding: 2.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    border: 50px solid rgba(255,255,255,0.05);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -25px; left: 60px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    border: 30px solid rgba(255,255,255,0.04);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 14px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .hero h1 { font-size: 22px; font-weight: 500; color: #fff; margin-bottom: 10px; line-height: 1.4; }
+  .hero p { font-size: 15px; color: rgba(255,255,255,0.75); line-height: 1.65; }
+  .stradi-dots { display: flex; gap: 6px; margin-top: 14px; }
+  .dot { width: 12px; height: 14px; border-radius: 3px; }
+  .dot-green { background: var(--stradi-green); }
+  .dot-slate { background: var(--stradi-slate); }
+  .dot-coral { background: var(--stradi-coral); }
+
+  /* MODULES GRID */
+  .modules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 1.5rem;
+  }
+  .module-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.1rem 1.25rem;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .module-card:hover { border-color: var(--stradi-blue); box-shadow: 0 0 0 2px rgba(27,79,114,0.1); transform: translateY(-1px); }
+  .module-num { font-size: 11px; color: var(--stradi-blue); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+  .module-icon { font-size: 20px; margin-bottom: 7px; }
+  .module-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; color: var(--text); }
+  .module-sub { font-size: 12px; color: var(--text2); line-height: 1.5; }
+
+  /* CONTENT */
+  .content-area {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.75rem;
+  }
+  .content-area h2 { font-size: 20px; font-weight: 600; margin-bottom: 0.4rem; color: var(--stradi-blue); }
+  .content-area .intro { font-size: 15px; line-height: 1.7; color: var(--text2); margin: 0.75rem 0 1.5rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); }
+  .content-area h3 { font-size: 14px; font-weight: 600; margin: 1.5rem 0 0.6rem; color: var(--stradi-blue-light); text-transform: uppercase; letter-spacing: 0.04em; }
+  .content-area p { font-size: 14px; line-height: 1.7; color: var(--text2); margin-bottom: 0.75rem; }
+  .content-area ul { padding-left: 1.4rem; }
+  .content-area li { font-size: 14px; line-height: 1.7; color: var(--text2); margin-bottom: 5px; }
+  .content-area li strong { color: var(--text); }
+
+  .tag-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: #EBF4FC;
+    color: var(--stradi-blue);
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+  .key-box {
+    background: rgba(27,79,114,0.05);
+    border-radius: 8px;
+    border-left: 3px solid var(--stradi-blue);
+    padding: 0.875rem 1.1rem;
+    margin: 1.1rem 0;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text2);
+    font-style: italic;
+  }
+  .tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 8px;
+    margin: 0.875rem 0;
+  }
+  .tool-item {
+    background: var(--bg3);
+    border-radius: 8px;
+    padding: 0.75rem 0.9rem;
+    font-size: 13px;
+    color: var(--text2);
+    border-left: 2px solid var(--stradi-slate);
+  }
+  .tool-item strong { display: block; font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+
+  /* NAV BUTTONS */
+  .nav-btns { display: flex; justify-content: space-between; margin-top: 1.5rem; }
+  .btn {
+    padding: 9px 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--text);
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+  .btn:hover { background: var(--bg3); }
+  .btn-primary { background: var(--stradi-blue); color: #fff; border-color: var(--stradi-blue); }
+  .btn-primary:hover { background: var(--stradi-blue-light); border-color: var(--stradi-blue-light); }
+
+  .module-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1.1rem; }
+  .mod-pill {
+    padding: 5px 13px;
+    border-radius: 20px;
+    font-size: 13px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    background: #fff;
+    color: var(--text2);
+    transition: all 0.12s;
+    font-family: inherit;
+  }
+  .mod-pill:hover { background: var(--bg3); }
+  .mod-pill.active { background: var(--stradi-blue); color: #fff; border-color: var(--stradi-blue); }
+
+  /* QUIZ */
+  .progress-bar { height: 4px; background: var(--bg3); border-radius: 2px; margin: 0.75rem 0; }
+  .progress-fill { height: 4px; background: var(--stradi-blue); border-radius: 2px; transition: width 0.3s; }
+  .quiz-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--stradi-blue); font-weight: 600; }
+  .question-text { font-size: 16px; font-weight: 500; margin: 1.25rem 0; line-height: 1.55; color: var(--text); }
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .option-btn {
+    text-align: left;
+    padding: 12px 16px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--text);
+    transition: all 0.12s;
+    line-height: 1.5;
+    font-family: inherit;
+  }
+  .option-btn:hover { border-color: var(--stradi-blue); background: rgba(27,79,114,0.03); }
+  .option-btn.correct { background: #EAF3DE; border-color: #3B6D11; color: #27500A; }
+  .option-btn.wrong { background: #FCEBEB; border-color: #A32D2D; color: #791F1F; }
+  .option-btn.disabled { pointer-events: none; }
+  .feedback {
+    margin-top: 1rem;
+    padding: 0.875rem 1.1rem;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+  .feedback.ok { background: #EAF3DE; color: #27500A; }
+  .feedback.ko { background: #FCEBEB; color: #791F1F; }
+  .quiz-nav { display: flex; justify-content: flex-end; margin-top: 1.25rem; }
+
+  /* SCORE */
+  .score-card { text-align: center; padding: 2.5rem 1rem; }
+  .score-big { font-size: 56px; font-weight: 600; color: var(--stradi-blue); line-height: 1; }
+  .score-label { font-size: 16px; color: var(--text2); margin: 0.5rem 0 1.25rem; }
+  .score-badge {
+    display: inline-block;
+    padding: 9px 24px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  .score-badge.gold { background: #FAEEDA; color: #633806; }
+  .score-badge.silver { background: #EBF4FC; color: var(--stradi-blue); }
+  .score-badge.bronze { background: #FAECE7; color: #712B13; }
+  .score-detail { font-size: 13px; color: var(--text3); margin-top: 0.5rem; }
+
+  /* START PAGE */
+  .quiz-start { text-align: center; padding: 2.5rem 1rem; }
+  .quiz-start h2 { font-size: 20px; font-weight: 600; margin-bottom: 0.75rem; color: var(--stradi-blue); }
+  .quiz-start p { font-size: 14px; color: var(--text2); margin-bottom: 0.5rem; }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: 12px;
+    color: var(--text3);
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+  }
+
+  @media (max-width: 600px) {
+    .topnav { padding: 0 1rem; }
+    .container { padding: 1rem; }
+    .hero { padding: 1.5rem; }
+    .hero h1 { font-size: 18px; }
+    .modules-grid { grid-template-columns: 1fr 1fr; }
+    .tool-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="nav-logo">
+    <img src="data:image/jpeg;base64,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LcDT9S6+dGPlc/7S/wBev1rlNJ8da78PL1NL8UQSXNmeI7sfMwHqG/jH6j9KvkjPWn9xHO4aT+89ioqrpup2usWcd1ZzpcW8gyrocirVc5uFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAVS1jRbLXrF7S/t0uIH6qw6H1B6g+4q7RRsG54vqPh7XfhLfvqWjSPfaMxzLC/OB/tgf+hD/wDX6R4Q8a6f4ysfOtX2ToB5tu5+dD/Ue9b7KHUqwDKRggjg15R4x+G95oN8df8ACjPBNGS8lpH6d9o7j/Z/L0rpUlV0lo+/+Zg06esdux6xRXGeAPiNa+MIPIm22uqRj95ATgP6svt7dq7OsJRcXZmsZKSugoooqSgooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAPNPiF8NpJ7g674fzbapEfMeKLjzCP4l/wBr+f166Xw6+I0fimL7DfYt9XhGHQ8eZjqQPX1FdzXmvxI+HstxN/wkGhBoNVgPmSJFwZMfxD/a/n9evRGSmuSfyZhKLg+aPzR6VRXGfDnx/F4wsTBcYi1W3GJo+m8dNw/r6H8K7OsZRcXZmsZKSugoooqSgooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAPKPiR4NudC1BfFegAxTwtvuIox+b49D/EPx9a7bwT4wtvGWjpdQ4SdMLPDnlG/wAD2Nb7osilWAZSMEHoRXjPiLTbn4TeK49Z01WbRrttssI6DPJT+oP4fXoj+9XK91t/kYSXs3zLbqe0UVV0vU7fWNPgvbWQS28yhlYf561arnNwooooAKKKKACiiigAooooAKK8R+NH7YXw4+CU0tjqWpvrGupwdI0gLNMh9JGyEj7cM27HIBr5K8Zf8FP/ABjq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" alt="Stradi Formation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+    <span style="display:none;font-weight:700;font-size:18px;color:#1B4F72;letter-spacing:-0.5px;">Stradi<span style="font-weight:400;font-size:12px;display:block;letter-spacing:0.1em;color:#5B7FA6;">FORMATION</span></span>
+  </div>
+  <button class="nav-btn active" onclick="showSection('accueil')">Accueil</button>
+  <button class="nav-btn" onclick="showSection('module')">Modules</button>
+  <button class="nav-btn" onclick="showSection('quiz')">Quiz final</button>
+</nav>
+
+<div class="container">
+
+<!-- ==================== ACCUEIL ==================== -->
+<div class="page active" id="sec-accueil">
+  <div class="hero">
+    <div class="hero-badge">Formation Conseil — Niveau Senior</div>
+    <h1>L'excellence du conseil : de l'écoute à la transformation</h1>
+    <p>Un parcours complet en 7 modules pour maîtriser l'art du diagnostic, de la recommandation et de l'accompagnement du changement. Conçu par Stradi Formation pour des consultants seniors exigeants.</p>
+    <div class="stradi-dots">
+      <div class="dot dot-green"></div>
+      <div class="dot dot-slate"></div>
+      <div class="dot dot-coral"></div>
+    </div>
+  </div>
+
+  <div class="modules-grid">
+    <div class="module-card" onclick="goModule(0)">
+      <div class="module-num">Module 1</div>
+      <div class="module-icon">👂</div>
+      <div class="module-title">Écouter</div>
+      <div class="module-sub">L'écoute active et stratégique comme fondement du diagnostic</div>
+    </div>
+    <div class="module-card" onclick="goModule(1)">
+      <div class="module-num">Module 2</div>
+      <div class="module-icon">🔍</div>
+      <div class="module-title">Analyser</div>
+      <div class="module-sub">Décoder la complexité : méthodes et posture analytique</div>
+    </div>
+    <div class="module-card" onclick="goModule(2)">
+      <div class="module-num">Module 3</div>
+      <div class="module-icon">🧩</div>
+      <div class="module-title">Comprendre & reformuler</div>
+      <div class="module-sub">Transformer la matière brute en problématique structurée</div>
+    </div>
+    <div class="module-card" onclick="goModule(3)">
+      <div class="module-num">Module 4</div>
+      <div class="module-icon">🏗️</div>
+      <div class="module-title">Structurer</div>
+      <div class="module-sub">Architecture du raisonnement et storytelling conseil</div>
+    </div>
+    <div class="module-card" onclick="goModule(4)">
+      <div class="module-num">Module 5</div>
+      <div class="module-icon">💡</div>
+      <div class="module-title">Recommander</div>
+      <div class="module-sub">L'art de la recommandation à fort impact</div>
+    </div>
+    <div class="module-card" onclick="goModule(5)">
+      <div class="module-num">Module 6</div>
+      <div class="module-icon">🎯</div>
+      <div class="module-title">Convaincre</div>
+      <div class="module-sub">Rhétorique, influence et gestion des résistances</div>
+    </div>
+    <div class="module-card" onclick="goModule(6)">
+      <div class="module-num">Module 7</div>
+      <div class="module-icon">🔄</div>
+      <div class="module-title">Accompagner le changement</div>
+      <div class="module-sub">Du plan à la transformation réelle</div>
+    </div>
+  </div>
+
+  <div style="text-align:right;">
+    <button class="btn btn-primary" onclick="showSection('module')">Démarrer la formation →</button>
+  </div>
+</div>
+
+<!-- ==================== MODULES ==================== -->
+<div class="page" id="sec-module">
+  <div class="module-pills" id="modPills"></div>
+  <div class="content-area" id="moduleContent"></div>
+  <div class="nav-btns">
+    <button class="btn" id="btnPrev" onclick="navModule(-1)">← Précédent</button>
+    <button class="btn btn-primary" id="btnNext" onclick="navModule(1)">Suivant →</button>
+  </div>
+</div>
+
+<!-- ==================== QUIZ ==================== -->
+<div class="page" id="sec-quiz">
+  <div class="content-area">
+    <div id="quizContent"></div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<footer>
+  © Stradi Formation — Formation Conseil Senior — Tous droits réservés
+</footer>
+
+<script>
+const modules = [
+{
+  title: "Module 1 — Écouter",
+  icon: "👂",
+  tag: "Fondement du diagnostic",
+  intro: "L'écoute est la compétence la plus sous-estimée du consultant senior. Non pas entendre, mais écouter : capter ce qui est dit, ce qui est tu, ce qui est ressenti. C'est là que commence la valeur ajoutée réelle.",
+  sections: [
+    {
+      h: "1.1 Les trois niveaux d'écoute",
+      body: `<p>Le consultant expert distingue trois strates dans chaque conversation :</p>
+      <ul>
+        <li><strong>Le niveau déclaratif</strong> : ce que le client dit explicitement — le symptôme présenté</li>
+        <li><strong>Le niveau émotionnel</strong> : l'affect qui sous-tend le discours — la pression, la peur, l'espoir</li>
+        <li><strong>Le niveau systémique</strong> : les dynamiques organisationnelles implicites — les non-dits, les tabous, les jeux de pouvoir</li>
+      </ul>
+      <div class="key-box">Un senior ne réagit pas au symptôme. Il écoute jusqu'à identifier la cause racine, même si le client ne l'a pas encore formulée.</div>`
+    },
+    {
+      h: "1.2 Les biais qui altèrent l'écoute",
+      body: `<p>Cinq biais récurrents chez les consultants expérimentés :</p>
+      <div class="tool-grid">
+        <div class="tool-item"><strong>Biais de confirmation</strong>Chercher ce qui valide un diagnostic déjà formé</div>
+        <div class="tool-item"><strong>Effet d'ancrage</strong>Surpondérer la première information reçue</div>
+        <div class="tool-item"><strong>Écoute sélective</strong>Filtrer selon ses domaines de compétence</div>
+        <div class="tool-item"><strong>Projection</strong>Prêter au client ses propres représentations</div>
+        <div class="tool-item"><strong>Impatience analytique</strong>Passer trop vite en mode solution</div>
+      </div>`
+    },
+    {
+      h: "1.3 Techniques d'écoute active avancée",
+      body: `<p>Outils opérationnels à maîtriser :</p>
+      <ul>
+        <li><strong>Le silence stratégique</strong> : laisser un blanc de 5 secondes après une réponse — le client comble souvent avec l'essentiel</li>
+        <li><strong>L'écho minimal</strong> : reprendre le dernier mot ou groupe de mots — incite à développer sans orienter</li>
+        <li><strong>La question en entonnoir</strong> : ouverte → semi-ouverte → fermée de vérification</li>
+        <li><strong>Le recadrage empathique</strong> : reformuler en intégrant la dimension émotionnelle perçue</li>
+        <li><strong>La cartographie des parties prenantes</strong> : identifier en écoutant qui parle de qui, comment et avec quel affect</li>
+      </ul>`
+    },
+    {
+      h: "1.4 L'écoute systémique en environnement complexe",
+      body: `<p>Dans les organisations complexes, l'écoute doit être orchestrée. Le consultant senior :</p>
+      <ul>
+        <li>Conduit des entretiens multi-niveaux hiérarchiques avec des grilles adaptées</li>
+        <li>Triangule systématiquement : une information n'a de valeur que confirmée par 3 sources indépendantes</li>
+        <li>Repère les dissonances entre discours du management et réalité terrain</li>
+        <li>Documente les signaux faibles qui préfigurent des ruptures</li>
+      </ul>
+      <div class="key-box">La valeur du consultant n'est pas dans ce qu'il sait faire — c'est dans ce qu'il entend que son client ne peut plus entendre.</div>`
+    }
+  ]
+},
+{
+  title: "Module 2 — Analyser",
+  icon: "🔍",
+  tag: "Posture analytique",
+  intro: "L'analyse conseil n'est pas une compilation de données. C'est un travail de décodage de la réalité organisationnelle, économique et humaine — pour en extraire ce qui est décisif.",
+  sections: [
+    {
+      h: "2.1 Du recueil à l'interprétation",
+      body: `<p>La distinction fondamentale entre un consultant junior et un senior : le junior décrit, le senior interprète. L'analyse senior procède en quatre temps :</p>
+      <ul>
+        <li><strong>Collecte exhaustive</strong> : données quantitatives et qualitatives, sans filtre a priori</li>
+        <li><strong>Mise en tension</strong> : confronter les données entre elles, chercher les contradictions</li>
+        <li><strong>Extraction des patterns</strong> : identifier les récurrences significatives</li>
+        <li><strong>Construction du sens</strong> : formuler une interprétation cohérente et falsifiable</li>
+      </ul>`
+    },
+    {
+      h: "2.2 Cadres analytiques de référence",
+      body: `<p>Les frameworks ne sont pas des réponses — ce sont des lentilles d'observation :</p>
+      <div class="tool-grid">
+        <div class="tool-item"><strong>MECE</strong>Mutually Exclusive, Collectively Exhaustive — structurer sans chevauchement ni oubli</div>
+        <div class="tool-item"><strong>5 forces de Porter</strong>Pression concurrentielle et structurale de valeur</div>
+        <div class="tool-item"><strong>Chaîne de valeur</strong>Localiser les leviers de performance réels</div>
+        <div class="tool-item"><strong>Arbre logique</strong>Décomposer jusqu'aux variables actionnables</div>
+        <div class="tool-item"><strong>5 Pourquoi / Ishikawa</strong>Remonter aux causes racines</div>
+        <div class="tool-item"><strong>Modélisation P&L</strong>Analyse de sensibilité économique</div>
+      </div>
+      <div class="key-box">Un framework mal choisi génère une réponse irréprochable à la mauvaise question.</div>`
+    },
+    {
+      h: "2.3 L'analyse sous incertitude",
+      body: `<p>Dans la réalité des missions, les données sont incomplètes. Le consultant senior sait :</p>
+      <ul>
+        <li>Estimer les ordres de grandeur avec les informations disponibles (raisonnement Fermi)</li>
+        <li>Distinguer l'incertitude réductible (manque de données) de l'incertitude irréductible (ambiguïté systémique)</li>
+        <li>Formuler des hypothèses explicites et les hiérarchiser par impact et probabilité</li>
+        <li>Communiquer la part d'incertitude résiduelle sans perdre en crédibilité</li>
+      </ul>`
+    },
+    {
+      h: "2.4 Analyse et perspective systémique",
+      body: `<p>Toute organisation est un système. L'analyse senior intègre :</p>
+      <ul>
+        <li>Les <strong>effets de second ordre</strong> : ce qu'une décision provoque au-delà de l'effet immédiat</li>
+        <li>Les <strong>boucles de rétroaction</strong> : amplificateurs ou amortisseurs ?</li>
+        <li>Les <strong>contraintes structurelles</strong> : ce qui conditionne tout le reste à court terme</li>
+        <li>Le <strong>timing</strong> : une bonne décision au mauvais moment est une mauvaise décision</li>
+      </ul>`
+    }
+  ]
+},
+{
+  title: "Module 3 — Comprendre & reformuler",
+  icon: "🧩",
+  tag: "De la matière au problème",
+  intro: "Reformuler n'est pas répéter. C'est restituer une réalité transformée — clarifiée, ordonnée, enrichie. La reformulation est la signature intellectuelle du consultant.",
+  sections: [
+    {
+      h: "3.1 Pourquoi reformuler est un acte stratégique",
+      body: `<p>La reformulation remplit quatre fonctions simultanées :</p>
+      <ul>
+        <li><strong>Validation</strong> : confirmer que la compréhension est juste avant d'investir dans l'analyse</li>
+        <li><strong>Clarification</strong> : aider le client à préciser sa propre pensée — souvent floue</li>
+        <li><strong>Recadrage</strong> : proposer une lecture différente, parfois plus juste ou plus utile</li>
+        <li><strong>Ancrage</strong> : poser une base partagée sur laquelle construire la suite</li>
+      </ul>
+      <div class="key-box">La reformulation est souvent le premier livrable de valeur d'une mission. Le client paie pour être compris avant d'être conseillé.</div>`
+    },
+    {
+      h: "3.2 Les trois niveaux de reformulation",
+      body: `<ul>
+        <li><strong>Reformulation miroir</strong> : restitution fidèle, légèrement reordonnée — valide la compréhension</li>
+        <li><strong>Reformulation synthétique</strong> : condense l'essentiel en supprimant le bruit — clarifie et hiérarchise</li>
+        <li><strong>Reformulation transformative</strong> : recadre le problème dans une nouvelle perspective — crée de la valeur analytique</li>
+      </ul>`
+    },
+    {
+      h: "3.3 La problématique : l'art de la bonne question",
+      body: `<p>Une problématique bien formulée est à mi-chemin entre la question du client et la réponse du consultant. Elle doit :</p>
+      <ul>
+        <li>Être formulée en termes de <strong>décision</strong>, pas de sujet : non pas "la performance de nos sites" mais "quels leviers actionner pour améliorer la performance de nos 3 sites déficitaires d'ici 18 mois ?"</li>
+        <li>Intégrer les <strong>contraintes réelles</strong> : temps, budget, politique interne</li>
+        <li><strong>Permettre de discriminer</strong> : une bonne problématique rend certaines réponses impossibles</li>
+        <li>Être <strong>validée explicitement</strong> par le client avant tout travail approfondi</li>
+      </ul>`
+    },
+    {
+      h: "3.4 Les pièges de la reformulation",
+      body: `<p>Erreurs fréquentes chez les seniors :</p>
+      <ul>
+        <li>Reformuler vers la solution qu'on a déjà en tête (biais de confirmation)</li>
+        <li>Sur-complexifier une situation simple pour valoriser l'expertise</li>
+        <li>Reformuler trop tôt, avant d'avoir suffisamment écouté</li>
+        <li>Ne pas valider : supposer qu'on a bien compris sans vérifier</li>
+      </ul>`
+    }
+  ]
+},
+{
+  title: "Module 4 — Structurer",
+  icon: "🏗️",
+  tag: "Architecture du raisonnement",
+  intro: "Un consultant qui pense bien mais structure mal perd 80% de sa valeur. La structure est le langage de la crédibilité. Elle transforme une intuition juste en conviction partageable.",
+  sections: [
+    {
+      h: "4.1 Le principe MECE appliqué au raisonnement",
+      body: `<p>Mutually Exclusive, Collectively Exhaustive : chaque partie du raisonnement doit être distincte et l'ensemble doit couvrir tout le champ. En pratique :</p>
+      <ul>
+        <li>Construire un arbre logique avant de rédiger</li>
+        <li>Tester chaque branche : se chevauche-t-elle ? Oublie-t-on un cas ?</li>
+        <li>Ne jamais avoir plus de 3 à 5 branches au même niveau</li>
+      </ul>`
+    },
+    {
+      h: "4.2 La pyramide de Minto",
+      body: `<p>Principe : la réponse d'abord, les arguments ensuite, les preuves en dernier. C'est l'exact inverse de la démarche analytique.</p>
+      <div class="key-box">Le client veut savoir "quoi faire" avant de savoir "pourquoi". Le consultant inexpérimenté arrive avec son processus analytique. Le senior arrive avec sa conclusion.</div>
+      <p>Structure SCQA :</p>
+      <ul>
+        <li><strong>Situation</strong> : contexte partagé et reconnu</li>
+        <li><strong>Complication</strong> : tension, problème, rupture</li>
+        <li><strong>Question</strong> : ce qui doit être décidé ou résolu</li>
+        <li><strong>Réponse</strong> : la recommandation principale, puis arguments, puis preuves</li>
+      </ul>`
+    },
+    {
+      h: "4.3 Structurer pour des audiences multiples",
+      body: `<p>Un même diagnostic doit souvent être présenté différemment selon l'audience :</p>
+      <div class="tool-grid">
+        <div class="tool-item"><strong>CODIR / DG</strong>Synthèse 1 page, 3 points, décision claire</div>
+        <div class="tool-item"><strong>DAF</strong>Impact économique, sensibilités, risques chiffrés</div>
+        <div class="tool-item"><strong>Opérationnels</strong>Actions concrètes, séquencement, responsabilités</div>
+        <div class="tool-item"><strong>Partenaires sociaux</strong>Légitimité du processus, impact humain, dialogue</div>
+      </div>`
+    },
+    {
+      h: "4.4 Le slide comme outil de pensée — règle des 3S",
+      body: `<p>Chaque slide doit porter une et une seule idée. Le titre est une assertion, pas un sujet.</p>
+      <ul>
+        <li><strong>Statement</strong> : quelle est l'affirmation centrale de ce slide ?</li>
+        <li><strong>Support</strong> : quelles données, faits ou analyses l'étayent ?</li>
+        <li><strong>So what</strong> : quelle est l'implication pour le client ?</li>
+      </ul>`
+    }
+  ]
+},
+{
+  title: "Module 5 — Recommander",
+  icon: "💡",
+  tag: "L'art de la recommandation",
+  intro: "Recommander, c'est prendre position. C'est l'acte de courage intellectuel qui distingue le vrai consultant du prestataire d'analyse. La recommandation engage — et c'est précisément ce qui crée de la valeur.",
+  sections: [
+    {
+      h: "5.1 Les six caractéristiques d'une bonne recommandation",
+      body: `<ul>
+        <li><strong>Actionnable</strong> : le client sait exactement ce qu'il doit faire</li>
+        <li><strong>Séquencée</strong> : l'ordre des actions est logique et réaliste</li>
+        <li><strong>Priorisée</strong> : les actions à fort impact sont identifiées et distinguées</li>
+        <li><strong>Contextualisée</strong> : elle tient compte des contraintes réelles du client</li>
+        <li><strong>Risquée-évaluée</strong> : les risques de chaque option sont explicités</li>
+        <li><strong>Assumée</strong> : le consultant prend position, sans équivoque</li>
+      </ul>`
+    },
+    {
+      h: "5.2 Le traitement des options alternatives",
+      body: `<p>Une recommandation n'est crédible que si elle a écarté des alternatives sérieusement examinées :</p>
+      <ul>
+        <li>Présenter 3 options (dont parfois le statu quo)</li>
+        <li>Évaluer chaque option sur les mêmes critères</li>
+        <li>Motiver explicitement le choix recommandé</li>
+        <li>Indiquer les conditions dans lesquelles une autre option serait préférable</li>
+      </ul>
+      <div class="key-box">Recommander une seule option sans alternatives apparaît dogmatique. Recommander sans trancher apparaît lâche. L'équilibre est dans l'option recommandée + le traitement honnête des alternatives.</div>`
+    },
+    {
+      h: "5.3 Quick wins et transformations profondes",
+      body: `<div class="tool-grid">
+        <div class="tool-item"><strong>0–3 mois</strong>Quick wins : visibles, mobilisateurs, sans risque — créent la confiance</div>
+        <div class="tool-item"><strong>3–12 mois</strong>Chantiers structurels : réorganisations, processus, systèmes</div>
+        <div class="tool-item"><strong>12–36 mois</strong>Transformations culturelles : les plus longues, les plus impactantes</div>
+      </div>`
+    },
+    {
+      h: "5.4 L'intégration des contraintes client",
+      body: `<p>Le consultant senior intègre systématiquement :</p>
+      <ul>
+        <li>Les <strong>contraintes financières</strong> : enveloppe disponible, ROI attendu, payback</li>
+        <li>Les <strong>contraintes humaines</strong> : capacité de changement, compétences disponibles</li>
+        <li>Les <strong>contraintes politiques</strong> : ce qui est acceptable dans le contexte de gouvernance</li>
+        <li>Les <strong>contraintes temporelles</strong> : agendas, cycle budgétaire, événements extérieurs</li>
+      </ul>`
+    }
+  ]
+},
+{
+  title: "Module 6 — Convaincre",
+  icon: "🎯",
+  tag: "Rhétorique et influence",
+  intro: "La meilleure recommandation non adoptée vaut zéro. Convaincre n'est pas manipuler : c'est créer les conditions cognitives, émotionnelles et relationnelles pour que le client puisse dire oui.",
+  sections: [
+    {
+      h: "6.1 Le triangle rhétorique appliqué au conseil",
+      body: `<p>Les trois leviers d'Aristote, réinterprétés pour le consultant :</p>
+      <ul>
+        <li><strong>Logos</strong> : la rigueur de l'argumentation — faits, analyses, cohérence logique</li>
+        <li><strong>Ethos</strong> : la crédibilité du consultant — légitimité, track record, posture</li>
+        <li><strong>Pathos</strong> : la résonance émotionnelle — enjeux personnels, vision inspirante, sens</li>
+      </ul>
+      <div class="key-box">Les consultants seniors surinvestissent souvent le Logos. Les décisions organisationnelles se prennent rarement sur la seule rationalité.</div>`
+    },
+    {
+      h: "6.2 La gestion des résistances — typologies et réponses",
+      body: `<div class="tool-grid">
+        <div class="tool-item"><strong>Résistance cognitive</strong>"Je ne comprends pas" → Reformuler, simplifier, illustrer</div>
+        <div class="tool-item"><strong>Résistance logique</strong>"Je ne suis pas convaincu" → Données complémentaires, angles alternatifs</div>
+        <div class="tool-item"><strong>Résistance émotionnelle</strong>"Je ne veux pas" → Explorer les enjeux, reconnaître les craintes</div>
+        <div class="tool-item"><strong>Résistance politique</strong>"Ce n'est pas le moment" → Travailler le contexte, les alliés, le timing</div>
+      </div>`
+    },
+    {
+      h: "6.3 Storytelling et mise en scène de la recommandation",
+      body: `<ul>
+        <li><strong>L'ancrage narratif</strong> : commencer par une situation concrète et reconnue avant de monter en abstraction</li>
+        <li><strong>Le contraste temporel</strong> : "où vous en êtes aujourd'hui" vs "où vous pourriez être dans 18 mois"</li>
+        <li><strong>La preuve sociale</strong> : benchmarks, cas analogues, pratiques de référence</li>
+        <li><strong>L'urgence légitime</strong> : pourquoi décider maintenant plutôt que plus tard</li>
+        <li><strong>La co-construction partielle</strong> : impliquer le client dans l'élaboration pour augmenter l'appropriation</li>
+      </ul>`
+    },
+    {
+      h: "6.4 Convaincre en contexte hostile",
+      body: `<ul>
+        <li><strong>Comité divisé</strong> : identifier le décideur réel, travailler les alliés en amont, gérer la séance comme une négociation</li>
+        <li><strong>Client défensif</strong> : revenir au problème partagé, éviter la confrontation frontale, utiliser la question socratique</li>
+        <li><strong>Remise en cause de l'analyse</strong> : distinguer désaccord sur les faits (vérifiable) et sur l'interprétation (débattable) — traiter séparément</li>
+      </ul>`
+    }
+  ]
+},
+{
+  title: "Module 7 — Accompagner le changement",
+  icon: "🔄",
+  tag: "Du plan à la transformation",
+  intro: "La recommandation adoptée est le début, pas la fin. Le vrai impact du consultant se mesure dans ce qui change durablement dans l'organisation. Ce module est le plus difficile — et le plus précieux.",
+  sections: [
+    {
+      h: "7.1 Comprendre la résistance au changement",
+      body: `<p>Le changement organisationnel échoue dans 70% des cas — non par manque de plan, mais par incompréhension de la dynamique humaine. Les modèles de référence :</p>
+      <ul>
+        <li><strong>Courbe du deuil (Kübler-Ross)</strong> : déni → colère → marchandage → dépression → acceptation</li>
+        <li><strong>Courbe d'adoption (Rogers)</strong> : innovateurs → early adopters → majorité précoce → majorité tardive → retardataires</li>
+        <li><strong>Modèle de Kotter</strong> : urgence → coalition → vision → communication → levée d'obstacles → victoires rapides → consolidation → ancrage</li>
+      </ul>`
+    },
+    {
+      h: "7.2 La cartographie des acteurs — matrice Influence / Posture",
+      body: `<div class="tool-grid">
+        <div class="tool-item"><strong>Influent + Favorable</strong>Alliés stratégiques — mobiliser, impliquer, valoriser</div>
+        <div class="tool-item"><strong>Influent + Hostile</strong>Bloqueurs — traiter en priorité, comprendre les enjeux</div>
+        <div class="tool-item"><strong>Peu influent + Favorable</strong>Ambassadeurs — nourrir, outiller, libérer</div>
+        <div class="tool-item"><strong>Peu influent + Hostile</strong>Sceptiques — surveiller, ne pas surinvestir</div>
+      </div>
+      <div class="key-box">Le changement se fait avec les alliés, pour les sceptiques, malgré les bloqueurs — jamais contre eux.</div>`
+    },
+    {
+      h: "7.3 Le plan de conduite du changement — les cinq piliers",
+      body: `<ul>
+        <li><strong>Communication</strong> : qui dit quoi, à qui, quand et par quel canal — adaptée à chaque audience</li>
+        <li><strong>Formation</strong> : adapter les compétences aux nouvelles pratiques — avant, pendant et après le déploiement</li>
+        <li><strong>Implication</strong> : co-construire avec les acteurs terrain — ils adoptent ce qu'ils ont contribué à créer</li>
+        <li><strong>Mesure</strong> : indicateurs de transformation comportementale — pas seulement de réalisation</li>
+        <li><strong>Ajustement</strong> : ritualiser les boucles de feedback et la capacité à pivoter</li>
+      </ul>`
+    },
+    {
+      h: "7.4 Le rôle spécifique du consultant dans la durée",
+      body: `<ul>
+        <li><strong>Architecte</strong> : designer la trajectoire et les jalons de transformation</li>
+        <li><strong>Miroir</strong> : restituer ce qui se passe réellement, y compris ce que l'organisation ne veut pas voir</li>
+        <li><strong>Facilitateur</strong> : créer les conditions du dialogue entre des acteurs qui ne se parlent plus</li>
+        <li><strong>Gardien de la vision</strong> : rappeler le cap quand la pression du quotidien fait dériver</li>
+        <li><strong>Coach de dirigeants</strong> : accompagner les décideurs dans leur propre transformation de posture</li>
+      </ul>
+      <div class="key-box">La mission du consultant se termine quand l'organisation n'a plus besoin de lui — pas avant.</div>`
+    }
+  ]
+}
+];
+
+const questions = [
+  { q:"Quelle est la définition la plus précise de l'écoute active en contexte conseil ?", opts:["Prendre des notes exhaustives pendant l'entretien","Capter simultanément le déclaratif, l'émotionnel et le systémique","Poser un maximum de questions pour collecter l'information","Reformuler chaque réponse immédiatement"], a:1, exp:"L'écoute active senior opère sur trois niveaux : ce qui est dit, ce qui est ressenti, et les dynamiques organisationnelles implicites." },
+  { q:"Le silence stratégique en entretien conseil sert principalement à :", opts:["Montrer au client qu'on réfléchit","Inciter le client à compléter spontanément avec l'essentiel","Gérer la durée de l'entretien","Prendre le contrôle de la conversation"], a:1, exp:"Un silence de 5 secondes après une réponse amène souvent le client à révéler l'information la plus importante." },
+  { q:"Quel biais consiste à chercher des informations qui valident un diagnostic déjà formé ?", opts:["Biais de représentativité","Effet d'ancrage","Biais de confirmation","Écoute sélective"], a:2, exp:"Le biais de confirmation pousse à filtrer les informations pour ne retenir que celles qui correspondent à l'hypothèse initiale." },
+  { q:"La triangulation en collecte d'information signifie :", opts:["Utiliser trois frameworks analytiques différents","Confronter trois sources indépendantes avant de valider une information","Interroger trois niveaux hiérarchiques","Présenter trois options de recommandation"], a:1, exp:"Une information n'a de valeur diagnostique que si elle est confirmée par au moins trois sources indépendantes." },
+  { q:"Qu'est-ce qui distingue fondamentalement l'analyse d'un consultant junior de celle d'un senior ?", opts:["Le volume de données collectées","La durée de l'analyse","Le junior décrit, le senior interprète","L'utilisation de frameworks plus sophistiqués"], a:2, exp:"La valeur ajoutée senior est dans l'interprétation : transformer des données en sens, identifier ce qui est décisif." },
+  { q:"Le raisonnement Fermi est utilisé pour :", opts:["Estimer des ordres de grandeur sous incertitude","Calculer le ROI d'une recommandation","Modéliser les scénarios de transformation","Évaluer la crédibilité des données clients"], a:0, exp:"Le raisonnement Fermi permet d'approcher une réalité inconnue par décomposition logique et estimation raisonnée." },
+  { q:"Dans l'analyse systémique, les effets de second ordre désignent :", opts:["Les impacts sur les parties prenantes secondaires","Ce qu'une décision provoque au-delà de l'effet immédiat","Les conséquences sur les systèmes d'information","Les résultats à moyen terme d'une recommandation"], a:1, exp:"Les effets de second ordre sont les conséquences indirectes d'une décision — souvent plus importantes que les effets directs." },
+  { q:"Un framework analytique mal choisi génère :", opts:["Une analyse incomplète","Une réponse irréprochable à la mauvaise question","Des conclusions trop prudentes","Un diagnostic trop détaillé"], a:1, exp:"Le risque majeur des frameworks est de formater le problème selon leur logique propre." },
+  { q:"La reformulation transformative se distingue des autres formes car elle :", opts:["Résume fidèlement les propos du client","Condense l'information essentielle","Recadre le problème dans une nouvelle perspective créatrice de valeur","Valide la compréhension avant d'analyser"], a:2, exp:"La reformulation transformative ne restitue pas — elle réinterprète. Elle propose une lecture nouvelle du problème." },
+  { q:"Pourquoi la problématique doit-elle être formulée en termes de décision ?", opts:["Pour limiter le champ de l'analyse","Pour faciliter la communication avec le client","Parce qu'elle doit rendre certaines réponses impossibles et guider l'action","Pour structurer le rapport final"], a:2, exp:"Une problématique formulée en termes de décision est discriminante : elle oriente vers l'actionnable." },
+  { q:"Quel est le piège le plus fréquent dans la reformulation chez les consultants seniors ?", opts:["Reformuler trop lentement","Reformuler vers la solution qu'on a déjà en tête","Reformuler avec trop de jargon","Reformuler par écrit plutôt qu'à l'oral"], a:1, exp:"Le biais de confirmation pousse le senior à orienter la reformulation vers une solution déjà pressentie." },
+  { q:"MECE signifie :", opts:["Mutually Exclusive, Collectively Exhaustive","Méthodologie d'Évaluation des Cas Exceptionnels","Multiple Expertise Combining Elements","Mutually Evaluated, Conditionally Exhaustive"], a:0, exp:"MECE garantit que les parties d'une structure logique ne se chevauchent pas et couvrent l'intégralité du champ." },
+  { q:"Dans la pyramide de Minto, quelle est la structure correcte ?", opts:["Preuves → Arguments → Réponse","Arguments → Preuves → Réponse","Réponse → Arguments → Preuves","Situation → Réponse → Arguments → Preuves"], a:2, exp:"La pyramide de Minto place la réponse (conclusion) en premier, puis les arguments, puis les preuves." },
+  { q:"La règle des 3S pour un slide conseil est :", opts:["Simplicité, Synthèse, Structure","Statement, Support, So what","Style, Substance, Séquence","Situation, Solution, Suivi"], a:1, exp:"Chaque slide doit porter une assertion (Statement), des preuves (Support), et une implication pour le client (So what)." },
+  { q:"Pourquoi le titre d'un slide doit-il être une assertion et non un sujet ?", opts:["Pour économiser de l'espace","Pour que le client comprenne l'idée même s'il ne lit pas le détail","Pour respecter les standards de présentation conseil","Pour faciliter la relecture ultérieure"], a:1, exp:"Un titre-assertion porte l'idée centrale. Un titre-sujet oblige à lire le slide pour comprendre." },
+  { q:"Une recommandation de qualité doit obligatoirement être :", opts:["Générale pour s'adapter à plusieurs contextes","Basée sur des benchmarks sectoriels","Assumée sans équivoque par le consultant","Validée par l'ensemble des parties prenantes"], a:2, exp:"Le consultant prend position. Une recommandation ambiguë ou conditionnelle ne remplit pas sa fonction." },
+  { q:"Pourquoi présenter des options alternatives à sa recommandation ?", opts:["Pour montrer l'étendue du travail réalisé","Pour donner au client l'illusion du choix","Pour renforcer la crédibilité en montrant que des alternatives ont été sérieusement examinées","Pour se protéger si la recommandation échoue"], a:2, exp:"Les alternatives traitées sérieusement montrent la rigueur de l'analyse et renforcent la légitimité du choix recommandé." },
+  { q:"Les 'quick wins' dans un plan de recommandation ont pour rôle principal de :", opts:["Résoudre les problèmes les plus simples","Créer la confiance et la mobilisation nécessaires à la transformation profonde","Démontrer la valeur de la mission","Identifier les résistances précoces"], a:1, exp:"Les quick wins sont choisis pour leur effet mobilisateur : ils montrent que le changement est possible." },
+  { q:"L'intégration des contraintes politiques dans une recommandation signifie :", opts:["Éviter les sujets sensibles pour le client","Tenir compte de ce qui est acceptable dans le contexte de gouvernance","Aligner la recommandation sur les positions syndicales","Recommander uniquement ce qui a déjà été décidé"], a:1, exp:"Une recommandation ignorant les contraintes politiques réelles sera rejetée même si intellectuellement irréprochable." },
+  { q:"Selon le triangle rhétorique, les consultants seniors sur-investissent généralement :", opts:["Le Pathos","L'Ethos","Le Logos","L'Ethos et le Pathos"], a:2, exp:"Les consultants sur-valorisent la rigueur analytique (Logos) au détriment de la résonance émotionnelle et relationnelle." },
+  { q:"Face à une résistance politique ('Ce n'est pas le moment'), la réponse appropriée est :", opts:["Insister sur l'urgence de la recommandation","Proposer de reporter la mission","Travailler le contexte, les alliés et le timing","Modifier la recommandation pour la rendre plus acceptable"], a:2, exp:"La résistance politique se traite rarement de front. Elle nécessite un travail en amont sur les agendas et les alliés." },
+  { q:"La co-construction partielle d'une recommandation avec le client permet de :", opts:["Réduire le temps de travail du consultant","Augmenter l'appropriation et donc la probabilité de mise en œuvre","Éviter les désaccords lors de la présentation","Valider la qualité de l'analyse"], a:1, exp:"Le client adopte plus facilement ce qu'il a contribué à créer. L'implication dans l'élaboration est une technique d'influence durable." },
+  { q:"Dans une situation de comité divisé, la priorité du consultant est :", opts:["Présenter les données les plus convaincantes","Identifier le décideur réel et travailler les alliés en amont","Proposer un vote","Reporter la décision"], a:1, exp:"Un comité divisé se prépare avant la réunion, pas pendant." },
+  { q:"La courbe de Kübler-Ross appliquée au changement organisationnel décrit :", opts:["Les phases de résistance des managers intermédiaires","Les étapes émotionnelles traversées par les acteurs face au changement","L'évolution de la performance pendant la transformation","Les cycles d'adoption des nouvelles technologies"], a:1, exp:"La courbe du deuil (déni → colère → marchandage → dépression → acceptation) s'applique au changement organisationnel." },
+  { q:"Dans la matrice Influence/Posture, les 'bloqueurs' sont :", opts:["Les acteurs peu influents et hostiles","Les acteurs influents et favorables","Les acteurs influents et hostiles","Les acteurs peu influents et favorables"], a:2, exp:"Les bloqueurs cumulent une forte influence et une posture hostile — ils sont prioritaires dans la stratégie d'acteurs." },
+  { q:"Selon Kotter, quelle est la première étape d'une transformation réussie ?", opts:["Constituer une coalition de guidage","Créer l'urgence","Communiquer la vision","Consolider les gains"], a:1, exp:"Kotter place la création du sentiment d'urgence en premier : sans elle, les acteurs n'ont aucune raison de changer." },
+  { q:"Le taux d'échec des transformations organisationnelles est estimé à :", opts:["30%","50%","70%","90%"], a:2, exp:"70% des projets de changement n'atteignent pas leurs objectifs — principalement pour des raisons humaines et culturelles." },
+  { q:"Le rôle de 'miroir' du consultant en conduite du changement consiste à :", opts:["Reproduire les pratiques du client","Restituer ce qui se passe réellement, y compris ce que l'organisation ne veut pas voir","Adapter ses recommandations aux perceptions du client","Valider les décisions déjà prises"], a:1, exp:"Le consultant-miroir offre une lecture de la réalité sans filtre défensif organisationnel." },
+  { q:"La courbe d'adoption de Rogers distingue en premier lieu :", opts:["Favorables et hostiles","Influents et peu influents","Innovateurs, early adopters, majorité précoce, tardive, retardataires","Décideurs, managers, opérationnels"], a:2, exp:"Rogers identifie cinq catégories d'adopteurs selon leur propension à adopter l'innovation." },
+  { q:"Dans un plan de conduite du changement, la 'mesure' doit porter sur :", opts:["Les jalons de livraison du projet","Les indicateurs de réalisation (livrables produits)","Les indicateurs de transformation comportementale","Le taux de satisfaction des équipes"], a:2, exp:"Mesurer la réalisation ne dit rien de la transformation réelle. Les indicateurs comportementaux mesurent l'impact véritable." },
+  { q:"La mission du consultant se termine quand :", opts:["Le rapport final est livré","Le client valide les recommandations","L'organisation n'a plus besoin de lui","Le budget de mission est consommé"], a:2, exp:"La finalité du consultant est de rendre l'organisation autonome — capable de maintenir la transformation sans dépendance externe." },
+  { q:"L'écoute en entonnoir procède dans quel ordre ?", opts:["Fermée → semi-ouverte → ouverte","Ouverte → semi-ouverte → fermée de vérification","Semi-ouverte → ouverte → fermée","Fermée → ouverte → semi-ouverte"], a:1, exp:"La question ouverte explore, la semi-ouverte précise, la fermée de vérification confirme. L'ordre inverse ferme le dialogue prématurément." },
+  { q:"Qu'est-ce que le 'contraste temporel' en storytelling conseil ?", opts:["Comparer les performances dans le temps","Opposer 'où vous en êtes aujourd'hui' et 'où vous pourriez être dans 18 mois'","Présenter l'historique du secteur avant les tendances","Montrer l'évolution du marché sur 5 ans"], a:1, exp:"Le contraste temporel crée une tension narrative entre la situation présente insatisfaisante et un futur désirable — levier rhétorique puissant." },
+  { q:"La différence entre incertitude réductible et irréductible est :", opts:["L'une est quantifiable, l'autre non","L'une est liée au manque de données, l'autre est structurelle (ambiguïté systémique)","L'une concerne le court terme, l'autre le long terme","L'une affecte le diagnostic, l'autre la recommandation"], a:1, exp:"L'incertitude réductible peut être levée par plus d'analyse. L'incertitude irréductible est inhérente à la complexité du système." },
+  { q:"Le 'gardien de la vision' en conduite du changement a pour rôle :", opts:["Rédiger et diffuser les documents de référence","Rappeler le cap quand la pression du quotidien fait dériver","Valider les décisions d'adaptation en cours de transformation","Former les managers à la nouvelle vision"], a:1, exp:"Sous la pression opérationnelle, les organisations dérivent. Le consultant maintient la cohérence entre vision et décisions quotidiennes." },
+  { q:"Structurer pour un DAF implique prioritairement de :", opts:["Présenter l'impact humain de la transformation","Mettre en avant les bénéfices clients","Intégrer l'impact économique, les sensibilités et les risques chiffrés","Développer l'argumentaire stratégique à long terme"], a:2, exp:"Le DAF attend une lecture économique : impact sur le P&L, sensibilité aux hypothèses, risques financiers." },
+  { q:"La question socratique en contexte de résistance cliente consiste à :", opts:["Citer des autorités pour valider sa position","Poser des questions qui amènent le client à formuler lui-même les contradictions de sa position","Démontrer l'erreur de raisonnement du client","Proposer des exemples contre-intuitifs"], a:1, exp:"La méthode socratique contourne la résistance frontale : le consultant questionne pour amener le client à découvrir les failles de sa position." },
+  { q:"L'implication des acteurs terrain dans la co-construction d'une transformation est stratégique car :", opts:["Elle réduit le coût de la mission","Elle garantit la qualité technique des solutions","Elle génère une légitimité et une appropriation que la prescription ne produit pas","Elle permet d'identifier les résistances plus tôt"], a:2, exp:"Les acteurs terrain adoptent ce qu'ils ont co-construit. La légitimité par la participation est irremplaçable." },
+  { q:"L'écho minimal comme technique d'écoute active consiste à :", opts:["Acquiescer verbalement à chaque affirmation","Reprendre le dernier mot ou groupe de mots pour inciter à développer","Répéter en intégralité la dernière phrase du client","Reformuler avec ses propres mots"], a:1, exp:"L'écho minimal signale l'attention sans orienter — et incite le client à approfondir spontanément." },
+  { q:"Dans la méthode SCQA, la 'complication' désigne :", opts:["Les obstacles à la mise en œuvre","La tension, le problème ou la rupture qui rend la situation inacceptable","Les contraintes budgétaires","Les désaccords entre parties prenantes"], a:1, exp:"La complication est l'élément qui rompt l'équilibre de la situation et rend l'action nécessaire." },
+  { q:"Un consultant qui présente une recommandation sans avoir validé la problématique avec le client risque :", opts:["De produire une analyse incomplète","D'apporter une réponse juste à une mauvaise question","De manquer des données importantes","De perdre en crédibilité lors de la présentation"], a:1, exp:"Sans validation de la problématique, le consultant risque de livrer une excellence hors sujet." },
+  { q:"La posture du consultant face à l'ambiguïté organisationnelle doit être :", opts:["Demander des clarifications jusqu'à obtenir une définition précise","Trancher rapidement pour garder le momentum","Formuler des hypothèses explicites et les hiérarchiser par impact et probabilité","Éviter de s'engager jusqu'à ce que l'ambiguïté se résolve"], a:2, exp:"L'ambiguïté est une donnée permanente du conseil. Le senior formule des hypothèses explicites et avance en révisant au fur et à mesure." }
+];
+
+let currentModule = 0;
+let currentQ = 0;
+let score = 0;
+let answered = false;
+let quizStarted = false;
+
+function showSection(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach((b, i) => {
+    b.classList.toggle('active', ['accueil','module','quiz'][i] === id);
+  });
+  if (id === 'module') renderModule();
+  if (id === 'quiz') renderQuiz();
+  window.scrollTo(0, 0);
+}
+
+function goModule(idx) {
+  currentModule = idx;
+  showSection('module');
+}
+
+function renderModule() {
+  const m = modules[currentModule];
+  const pills = document.getElementById('modPills');
+  pills.innerHTML = modules.map((mod, i) =>
+    `<button class="mod-pill${i===currentModule?' active':''}" onclick="goModule(${i})">${mod.icon} ${i+1}</button>`
+  ).join('');
+  let html = `<div class="tag-badge">${m.icon} ${m.tag}</div><h2>${m.title}</h2><p class="intro">${m.intro}</p>`;
+  m.sections.forEach(s => { html += `<h3>${s.h}</h3>${s.body}`; });
+  document.getElementById('moduleContent').innerHTML = html;
+  document.getElementById('btnPrev').style.visibility = currentModule === 0 ? 'hidden' : 'visible';
+  document.getElementById('btnNext').textContent = currentModule === modules.length-1 ? 'Passer au quiz →' : 'Module suivant →';
+  window.scrollTo(0, 0);
+}
+
+function navModule(dir) {
+  if (dir === 1 && currentModule === modules.length-1) { showSection('quiz'); return; }
+  currentModule = Math.max(0, Math.min(modules.length-1, currentModule + dir));
+  renderModule();
+}
+
+function renderQuiz() {
+  if (!quizStarted) {
+    document.getElementById('quizContent').innerHTML = `
+      <div class="quiz-start">
+        <div style="font-size:48px;margin-bottom:1rem;">📋</div>
+        <h2>Quiz de certification</h2>
+        <p>40 questions couvrant l'ensemble des 7 modules.</p>
+        <p style="margin-bottom:1.5rem;">Validez votre maîtrise du conseil senior.</p>
+        <div class="stradi-dots" style="justify-content:center;margin-bottom:1.5rem;">
+          <div class="dot dot-green"></div><div class="dot dot-slate"></div><div class="dot dot-coral"></div>
+        </div>
+        <button class="btn btn-primary" onclick="startQuiz()">Commencer le quiz →</button>
+      </div>`;
+    return;
+  }
+  if (currentQ >= questions.length) { renderScore(); return; }
+  const q = questions[currentQ];
+  const pct = Math.round((currentQ / questions.length) * 100);
+  document.getElementById('quizContent').innerHTML = `
+    <div style="margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <span class="quiz-label">Stradi Formation — Quiz Senior</span>
+        <span style="font-size:13px;color:#718096;">Score : ${score} / ${currentQ}</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+      <div style="font-size:12px;color:#718096;">Question ${currentQ+1} sur ${questions.length}</div>
+    </div>
+    <p class="question-text">${q.q}</p>
+    <div class="options" id="opts">
+      ${q.opts.map((o,i)=>`<button class="option-btn" onclick="answer(${i})">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}
+    </div>
+    <div id="feedback"></div>
+    <div class="quiz-nav" id="qnav"></div>`;
+}
+
+function startQuiz() {
+  quizStarted = true; currentQ = 0; score = 0; answered = false;
+  renderQuiz();
+}
+
+function answer(idx) {
+  if (answered) return;
+  answered = true;
+  const q = questions[currentQ];
+  document.querySelectorAll('.option-btn').forEach((b,i) => {
+    b.classList.add('disabled');
+    if (i === q.a) b.classList.add('correct');
+    else if (i === idx && i !== q.a) b.classList.add('wrong');
+  });
+  if (idx === q.a) score++;
+  document.getElementById('feedback').innerHTML = `<div class="feedback ${idx===q.a?'ok':'ko'}">${idx===q.a?'✓ Correct — ':'✗ Incorrect — '}${q.exp}</div>`;
+  document.getElementById('qnav').innerHTML = `<button class="btn btn-primary" onclick="nextQ()">${currentQ+1<questions.length?'Question suivante →':'Voir mon résultat'}</button>`;
+}
+
+function nextQ() {
+  currentQ++; answered = false; renderQuiz();
+  window.scrollTo(0, 0);
+}
+
+function renderScore() {
+  const pct = Math.round((score/questions.length)*100);
+  let badge, msg;
+  if (pct >= 85) { badge='gold'; msg='Expert Stradi Formation'; }
+  else if (pct >= 70) { badge='silver'; msg='Niveau Confirmé'; }
+  else { badge='bronze'; msg='Niveau Intermédiaire — Des axes à renforcer'; }
+  document.getElementById('quizContent').innerHTML = `
+    <div class="score-card">
+      <div class="score-big">${score}/${questions.length}</div>
+      <div class="score-label">${pct}% de réponses correctes</div>
+      <div class="score-badge ${badge}">${msg}</div>
+      <div class="stradi-dots" style="justify-content:center;margin:1.25rem 0;">
+        <div class="dot dot-green"></div><div class="dot dot-slate"></div><div class="dot dot-coral"></div>
+      </div>
+      <p class="score-detail">Seuil Expert : 34/40 (85%) — Seuil Confirmé : 28/40 (70%)</p>
+      <div style="margin-top:1.75rem;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <button class="btn" onclick="startQuiz()">Refaire le quiz</button>
+        <button class="btn btn-primary" onclick="showSection('accueil')">Retour à l'accueil</button>
+      </div>
+    </div>`;
+}
+
+renderModule();
+renderQuiz();
+</script>
+</body>
+</html>
